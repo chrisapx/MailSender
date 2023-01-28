@@ -1,8 +1,10 @@
 package com.aetotechs.mailSender.notification_service.contoller;
 
 import com.aetotechs.mailSender.notification_service.Email.Email;
+import com.aetotechs.mailSender.notification_service.Email.Emails;
 import com.aetotechs.mailSender.notification_service.service.EmailService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,9 +19,19 @@ public class EmailController {
         this.emailService = emailService;
     }
 
+    @PostMapping("/notice")
     public ResponseEntity sendEmail(@RequestBody Email email){
-        if(emailService.send(email) != null ) return ResponseEntity.ok(emailService.send(email));
+        if(email != null ) return ResponseEntity.ok(emailService.send(email));
 
         return null;
     }
+
+    @PostMapping("/alerts")
+    public ResponseEntity sendEmails(@RequestBody Emails emails){
+        if(emails != null ) return ResponseEntity.ok(emailService.sendMultiple(emails));
+
+        return null;
+    }
+
+
 }
